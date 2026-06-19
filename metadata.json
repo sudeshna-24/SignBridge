@@ -1,0 +1,6 @@
+{
+  "name": "SignBridge AI",
+  "description": "AI-powered accessibility platform translating sign language and hand gestures from webcam, images, and videos into text and speech.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
