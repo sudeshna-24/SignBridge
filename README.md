@@ -19,7 +19,7 @@
 ## 📸 Preview
 
 <div align="center">
-  <img src="assets/screenshots/landing-page.png" alt="SignBridge AI landing page showing the live MediaPipe translation dashboard" width="850"/>
+  <img src="assets/.aistudio/screenshots/landing-page.png" alt="SignBridge AI landing page showing the live MediaPipe translation dashboard" width="850"/>
   <p><em>SignBridge AI landing dashboard — live camera translation, image analysis, and video decomposition tools in one workspace.</em></p>
 </div>
 
