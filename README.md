@@ -1,185 +1,242 @@
-# SignBridge AI – Accessibility Translation Platform
+<div align="center">
 
-SignBridge AI is a state-of-the-art, production-ready sign language and hand gesture translation platform designed to bridge the communication gap between hearing-impaired individuals and non-sign-language speakers. It translates live camera feeds, static images, and continuous video inputs into high-fidelity textual strings and natural spoken speech outputs in both **English** and **Hindi**.
+# 🤟 SignBridge AI
 
----
+### Real-Time Sign Language ↔ Speech & Text Translation Platform
 
-## 🚀 Dual-Engine Architecture
+**Bridging communication between the hearing-impaired and hearing communities through AI, computer vision, and natural speech synthesis — in English & Hindi.**
 
-This repository contains a **hybrid full-stack architecture** optimized for dual operational deployment:
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](#-license)
+[![TypeScript](https://img.shields.io/badge/TypeScript-92.9%25-3178C6?logo=typescript&logoColor=white)](#)
+[![Python](https://img.shields.io/badge/Python-6.2%25-3776AB?logo=python&logoColor=white)](#)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](#)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi&logoColor=white)](#)
 
-1. **Development & Preview Engine (Node.js + Express + Vite)**:
-   - Built to run seamlessly within the sandboxed Cloud Run hosting space.
-   - Handles real-time MediaPipe landmarks drawing on client browsers at 30+ FPS.
-   - Proxies multi-modal visual payloads and TTS requests securely to the **Google GenAI Python core SDK** via server-side endpoints on port `3000`.
-
-2. **Production-Ready Core (Python + FastAPI + MediaPipe Hands + SQLite)**:
-   - Located inside the `/backend` folder.
-   - Implements advanced landmark vector bounding coordinate extraction to heuristically classify poses.
-   - Provides full-featured REST endpoints, validates media uploads, synthesizes translations with `gTTS`, and persists transactions in SQLite tables.
+</div>
 
 ---
 
-## 🛠️ Tech Stack & Dependencies
+## 📸 Preview
 
-### Frontend (React v19 SPA)
-- **Vite & TypeScript**: Standard modular bundling and strict type safety layers.
-- **Tailwind CSS (v4)**: Modern, custom-compiled responsive glassmorphic utility classes.
-- **Lucide-React**: Unified, highly aesthetic iconography.
-- **MediaPipe Hands**: Dynamic browser-side neural model tracking hand landmarks.
-
-### Backend (Full-Stack Express + Python FastAPI)
-- **Express**: Captures frame base64 snapshots and manages file-based SQLite emulation caching.
-- **Google GenAI SDK**: Powers the server-side visual translational parser using the advanced `gemini-3.5-flash` and `gemini-3.1-flash-tts-preview` modules.
-- **FastAPI / Uvicorn**: High-performance Python core server.
-- **OpenCV & MediaPipe Hands**: Decodes image binary grids and connects 21 3D landmarks for heuristic classification.
-- **sqlite3 / SQLite**: Stores historical entries with indexes.
-- **gTTS (Google Text-To-Speech)**: Translates outputs into offline spoken wave files.
+<div align="center">
+  <img src="assets/screenshots/landing-page.png" alt="SignBridge AI landing page showing the live MediaPipe translation dashboard" width="850"/>
+  <p><em>SignBridge AI landing dashboard — live camera translation, image analysis, and video decomposition tools in one workspace.</em></p>
+</div>
 
 ---
 
-## 📁 Repository Folder Structure
+## 📖 Overview
 
-```text
-signbridge-ai/
-├── backend/                    # Core Python Production Backend
-│   ├── main.py                 # Central FastAPI endpoints & routing
-│   ├── database.py             # SQLite structure setup & connections
-│   ├── models.py               # Pydantic validation schemas
-│   ├── gtts_service.py         # Google Text-to-Speech synthesis
-│   └── requirements.txt        # Python backend packages list
-├── database/                   # Persistent data structures folder
-│   ├── translations.json       # SQLite emulated transactions
-│   └── settings.json           # Interactive preference configs
-├── src/                        # Modular React Frontend Space
+**SignBridge AI** is a full-stack accessibility platform that translates hand gestures and sign language into readable text and natural speech, in real time. It supports three input modes — **live webcam feeds**, **static image uploads**, and **video files** — and produces bilingual (**English** + **Hindi**) text and audio output.
+
+The project ships with two complementary engines so it can run as a fast, AI-Studio-ready web app *or* as a standalone, production-grade API:
+
+| Engine | Stack | Purpose |
+|---|---|---|
+| **Web App** | React 19 + Vite + Express | Browser-based UI with live MediaPipe hand tracking and a Gemini-powered translation proxy |
+| **Core API** | FastAPI + MediaPipe + OpenCV | Standalone REST backend for landmark extraction, classification, history, and text-to-speech |
+
+---
+
+## ✨ Key Features
+
+- 🎥 **Live Camera Translation** — Real-time hand landmark tracking via MediaPipe rendered directly on the browser canvas
+- 🖼️ **Image Upload Analysis** — Drag-and-drop a photo to translate a static gesture
+- 🎞️ **Video Decomposition** — Breaks a video into a gesture timeline and stitches it into a full sentence
+- 🌐 **Bilingual Output** — Every translation is produced in both **English** and **Hindi**
+- 🔊 **Text-to-Speech** — Natural spoken playback of translated text via Google TTS
+- 📖 **Sign Dictionary** — Searchable glossary of gestures with bilingual definitions
+- 🕘 **History Logs** — Stores, filters, and exports past translations
+- ⚙️ **User Preferences** — Configurable settings for language, voice, and detection sensitivity
+- 🔐 **Login Gate** — Lightweight authentication screen guarding the workspace
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend**
+- React 19 + TypeScript + Vite
+- Tailwind CSS v4 (glassmorphic UI)
+- `lucide-react` icons · `motion` animations · `react-markdown`
+
+**Web Server / AI Proxy**
+- Express + `tsx`
+- Google GenAI SDK (`@google/genai`) for Gemini-based image/video/TTS inference
+
+**Core Backend (`/backend`)**
+- FastAPI + Uvicorn
+- MediaPipe Hands + OpenCV for landmark extraction and gesture classification
+- SQLite for translation history and settings persistence
+- gTTS for offline speech synthesis
+
+---
+
+## 📁 Project Structure
+
+```
+SignBridge/
+├── assets/
+│   └── screenshots/             # README preview images
+├── backend/                     # Standalone Python/FastAPI core
+│   ├── main.py                  # API routes & app startup
+│   ├── database.py              # SQLite connection & schema
+│   ├── models.py                # Pydantic request/response models
+│   ├── gtts_service.py          # Text-to-speech synthesis
+│   └── requirements.txt
+├── src/
 │   ├── components/
-│   │   └── Sidebar.tsx         # Responsive sidebar navigation header
+│   │   ├── Sidebar.tsx          # App navigation
+│   │   └── GestureIllustration.tsx
 │   ├── pages/
-│   │   ├── Dashboard.tsx       # Onboarding cards & visual cheat-sheet
-│   │   ├── LiveCamera.tsx      # Real-time skeleton tracking and audio readout
-│   │   ├── ImageUpload.tsx     # Drag-and-drop JPEG/PNG translator
-│   │   ├── VideoUpload.tsx     # Frame sequence timeliner and sentence builder
-│   │   ├── HistoryModule.tsx   # Search, filters, and CSV exporters
-│   │   └── SettingsModule.tsx  # Interactive configurations UI
+│   │   ├── LandingPage.tsx      # Marketing/landing dashboard
+│   │   ├── LoginGate.tsx        # Auth gate
+│   │   ├── Dashboard.tsx        # Onboarding & quick actions
+│   │   ├── LiveCamera.tsx       # Real-time webcam translator
+│   │   ├── ImageUpload.tsx      # Image-based translator
+│   │   ├── VideoUpload.tsx      # Video timeline translator
+│   │   ├── DictionaryModule.tsx # Searchable sign dictionary
+│   │   ├── HistoryModule.tsx    # Translation history & export
+│   │   └── SettingsModule.tsx   # User preferences
+│   ├── services/
+│   │   └── api.ts               # Frontend → backend API client
 │   ├── utils/
-│   │   └── gesturesData.ts     # Bilingual signs glossary dictionary
-│   ├── App.tsx                 # Master structural layout assembler
-│   ├── types.ts                # TypeScript shared models
-│   ├── index.css               # Font imports and glassmorphic frames styles
-│   └── main.tsx                # Frontend engine entry
-├── server.ts                   # Full-Stack Express and Gemini proxy backend
-├── package.json                # Frontend dev & esbuild starter files
-└── metadata.json               # Accessibility frame permissions metadata
+│   │   └── gesturesData.ts      # Bilingual gesture glossary
+│   ├── App.tsx
+│   ├── types.ts
+│   ├── index.css
+│   └── main.tsx
+├── server.ts                    # Express server + Gemini proxy
+├── index.html
+├── metadata.json
+├── vite.config.ts
+├── tsconfig.json
+├── .env.example
+└── package.json
 ```
 
 ---
 
-## ⚙️ How to Run & Deploy
+## ⚙️ Getting Started
 
-### Option A: Local Dev & Live Preview (Fully Configured)
+### Prerequisites
+- Node.js 18+ and npm
+- Python 3.10+ (for the core backend)
+- A [Gemini API key](https://aistudio.google.com/) if you intend to use AI-powered translation
 
-This mode launches the complete React 19 interface paired with the Server-Side Express Proxy, executing 100% of translational flows inside the workspace canvas!
+### Option A — Web App (React + Express)
 
-1. **Install Frontend Dependencies**:
-   ```bash
-   npm install
-   ```
+```bash
+# 1. Clone the repository
+git clone https://github.com/sudeshna-24/SignBridge.git
+cd SignBridge
 
-2. **Launches the Server**:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:3000` in your browser.
+# 2. Install dependencies
+npm install
 
-3. **Configure API Secrets**:
-   To enable high-fidelity Gemini AI analysis for frame captures, images, and high-fidelity TTS file generations:
-   - Access **Settings > Secrets** in the UI.
-   - Create a variable named `GEMINI_API_KEY` and populate it with your personal key.
+# 3. Configure environment variables
+cp .env.example .env
+# then edit .env and add your GEMINI_API_KEY
 
----
+# 4. Run the dev server
+npm run dev
+```
 
-### Option B: Core Python FastAPI Backend (Production Build)
+Visit **http://localhost:3000** in your browser.
 
-These files are located in `/backend` and represent the complete standalone API product.
+### Option B — Core Python API (FastAPI)
 
-1. **Navigate to the Backend Folder**:
-   ```bash
-   cd backend
-   ```
+```bash
+cd backend
 
-2. **Create Python Virtual Environment**:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use: venv\Scripts\activate
-   ```
+# Create and activate a virtual environment
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
 
-3. **Install Core Requirements**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+# Install dependencies
+pip install -r requirements.txt
 
-4. **Launch the FastAPI Server**:
-   ```bash
-   uvicorn main:app --reload --host 0.0.0.0 --port 8000
-   ```
-   Access the interactive swagger document page at `http://localhost:8000/docs`.
+# Launch the server
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Visit **http://localhost:8000/docs** for the interactive Swagger UI.
 
 ---
 
-## 📡 API Reference Documentation
+## 📡 API Reference
 
-### 1. Image Translate Pipeline
-- **Endpoint**: `POST /api/translate/image`
-- **Payload**:
-  ```json
-  {
-    "imageBase64": "data:image/jpeg;base64,...",
-    "language": "Hindi"
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "gestureName": "I Love You",
-    "translationEnglish": "I Love You",
-    "translationHindi": "मैं तुमसे प्यार करता हूँ",
-    "extracted_text": "मैं तुमसे प्यार करता हूँ",
-    "confidence": 0.98
-  }
-  ```
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET`  | `/` | Health check |
+| `POST` | `/api/translate/image` | Translate a single image into bilingual text |
+| `POST` | `/api/translate/video` | Decompose a video into a gesture timeline and full sentence |
+| `GET`  | `/api/history` | Retrieve saved translation history |
+| `POST` | `/api/history` | Save a translation to history |
+| `DELETE` | `/api/history/{item_id}` | Delete a history entry |
+| `GET`  | `/api/settings` | Retrieve user settings |
+| `POST` | `/api/settings` | Update user settings |
+| `POST` | `/api/tts` | Generate spoken audio from text |
 
-### 2. Video Timeline Compiler
-- **Endpoint**: `POST /api/translate/video`
-- **Payload**:
-  ```json
-  {
-    "videoFrames": ["data:image/jpeg;base64,...", "data:image/jpeg;base64,..."]
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "timeline": [
-      { "timeline": "0.5s", "gesture": "Hello", "en": "Hello", "hi": "नमस्ते" }
-    ],
-    "sentenceEnglish": "Hello and welcome to building accessibility",
-    "sentenceHindi": "नमस्ते और पहुंच निर्माण में आपका स्वागत है"
-  }
-  ```
+**Example — Image Translation**
 
-### 3. TTS Speech Generator
-- **Endpoint**: `POST /api/tts`
-- **Payload**:
-  ```json
-  {
-    "text": "Hello world welcome",
-    "language": "English"
-  }
-  ```
-- **Response**: Returns direct raw audio PCM chunks/MP3 file responses.
+Request:
+```json
+POST /api/translate/image
+{
+  "imageBase64": "data:image/jpeg;base64,...",
+  "language": "Hindi"
+}
+```
+
+Response:
+```json
+{
+  "gestureName": "I Love You",
+  "translationEnglish": "I Love You",
+  "translationHindi": "मैं तुमसे प्यार करता हूँ",
+  "confidence": 0.98
+}
+```
 
 ---
 
-## 🔒 Security & Safe Operations
-- **Upload Validation**: File uploads are rigidly validated by format extensions (`.jpg`, `.png`, `.mp4`. `.mov`, `.avi`) and sizes (max 5MB for photos; 15MB for video timelines) to safeguard backend processes from buffer overruns or infinite processing stalls.
-- **Sandbox Compliance**: Webcams operate via HTTPS standard browser sandbox controls. Hand landmark coordinates are drawn dynamically on offscreen canvas boxes, keeping actual frame sequences fully private.
+## 🔒 Security & Validation
+
+- Upload validation by file extension (`.jpg`, `.png`, `.mp4`, `.mov`, `.avi`) and size (5MB images / 15MB video)
+- Camera access only over HTTPS via the browser sandbox; landmark coordinates are computed client-side, frames are never persisted
+- API keys are read from environment variables and never committed to source control
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Expand the sign dictionary with regional dialect variants
+- [ ] Offline/on-device inference mode
+- [ ] Mobile-responsive camera capture
+- [ ] Additional language support beyond English/Hindi
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please open an issue to discuss what you'd like to change, then submit a pull request.
+
+```bash
+git checkout -b feature/your-feature
+git commit -m "Add your feature"
+git push origin feature/your-feature
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+<div align="center">
+
+Built with ❤️ by **[Sudeshna Roy](https://github.com/sudeshna-24)**
+
+</div>
